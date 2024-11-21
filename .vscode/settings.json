@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.referencedLibraries": [
+        "lib\\mssql-jdbc-12.8.1.jre11.jar",
+        "z:\\Projetos\\TesteConexao\\lib\\mssql-jdbc-12.8.1.jre11.jar"
+    ]
+}

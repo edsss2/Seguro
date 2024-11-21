@@ -1,0 +1,30 @@
+{
+        "version": "0.2.0",
+        "configurations": [
+                {
+                        "type": "java",
+                        "name": "Seguro",
+                        "request": "launch",
+                        "mainClass": "seguro.Seguro",
+                        "projectName": "TesteConexao_c9b13960"
+                },
+                {
+                        "type": "java",
+                        "name": "frmPrincipal",
+                        "request": "launch",
+                        "mainClass": "apresentacao.frmPrincipal",
+                        "projectName": "TesteConexao_c9b13960"
+                },
+                {
+                        "type": "java",
+                        "name": "Executar Projeto Java",
+                        "request": "launch",
+                        "mainClass": "Seguro",
+                        "classPaths": [
+                                "bin",
+                                "lib/mysql-connector-j-9.0.0.jar"
+                        ]
+                }
+        ]
+        
+}
