@@ -4,9 +4,14 @@
  */
 package apresentacao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.JOptionPane;
 
 import seguro.Empresa;
+import seguro.TratamentoDados;
 import classes_conexao.EmpresaDAO;
 import classes_conexao.GenericDAO;
 
@@ -14,14 +19,39 @@ import classes_conexao.GenericDAO;
  *
  * @author Edsons
  */
-public class frmPrincipal extends javax.swing.JDialog {
-
-            
-            
-    public frmPrincipal(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
+public class frmPrincipal extends javax.swing.JDialog implements TratamentoDados {
+	
+	 public frmPrincipal(java.awt.Frame parent, boolean modal) {
+	        super(parent, modal);
+	        initComponents();
+	    }
+	
+	@Override
+	public String formatarDataParaSQL(String data) {
+		String[] dataSeparada = data.split("/");
+		String dataFormatada = dataSeparada[2] + "-" + dataSeparada[1] + "-" + dataSeparada[0];
+		return dataFormatada;
+	}
+	
+	@Override
+	public int converterParaInt (String dadoComCaracteresEspeciais) {
+    	// Remover todos os caracteres que não são números
+        String dadoNumerico = dadoComCaracteresEspeciais.replaceAll("[^0-9]", "");
+        int dadoTratado = Integer.parseInt(dadoNumerico);
+        return dadoTratado;
     }
+    
+	@Override
+    public Long converterParaLong (String dadoComCaracteresEspeciais) {
+    	// Remover todos os caracteres que não são números
+        String dadoNumerico = dadoComCaracteresEspeciais.replaceAll("[^0-9]", "");
+        long dadoTratado = Long.parseLong(dadoNumerico);
+        return dadoTratado;
+    }
+	
+	
+    
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -136,7 +166,7 @@ public class frmPrincipal extends javax.swing.JDialog {
         jLabel13.setText("Hora Provavel do acidente:");
 
         try {
-            horaAcidenteTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            horaAcidenteTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -145,6 +175,7 @@ public class frmPrincipal extends javax.swing.JDialog {
                 horaAcidenteTxtActionPerformed(evt);
             }
         });
+        horaAcidenteTxt.setText("00:00");
 
         jLabel14.setText("Descrição do Acidente:");
 
@@ -167,11 +198,11 @@ public class frmPrincipal extends javax.swing.JDialog {
         cepTxt.setText("00000-000");
 
         try {
-            cnpjTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            cnpjTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        cnpjTxt.setText("000.000.000-00");
+        cnpjTxt.setText("");
 
         jLabel15.setText("4. Contato da Empresa");
 
@@ -363,6 +394,7 @@ public class frmPrincipal extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    
 
     private void nomeTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeTxtActionPerformed
         
@@ -393,10 +425,16 @@ public class frmPrincipal extends javax.swing.JDialog {
     }//GEN-LAST:event_horaAcidenteTxtActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    	
+    	//Converte as Strings para numeros inteiros
+    	long cnpjNumerico = converterParaLong(cnpjTxt.getText());
+    	int cepNumerico = converterParaInt(cepTxt.getText());
+    	String dataSQL = formatarDataParaSQL(dataAcidenteTxt.getText());
+    	
         
-//        String[] dadosEmpresa = {nomeTxt.getText(),cnpjTxt.getText(),tecnicoTxt.getText(),empresaTxt.getText(),enderecoTxt.getText(), bairroTxt.getText(),cidadeTxt.getText(),
-//        cepTxt.getName(),dataAcidenteTxt.getText(),horaAcidenteTxt.getText(),txtDescricao.getText(),emailTxt.getText(),telefoneTxt.getText()};
-    	Empresa novaEmpresa = new Empresa(nomeTxt.getText(), cnpjTxt.getText());
+
+    	Empresa novaEmpresa = new Empresa(nomeTxt.getText(),cnpjNumerico,tecnicoTxt.getText(),empresaTxt.getText(),enderecoTxt.getText(), bairroTxt.getText(),cidadeTxt.getText(), 
+    				cepNumerico,dataSQL,horaAcidenteTxt.getText(),txtDescricao.getText(), telefoneTxt.getText(), emailTxt.getText());
     	EmpresaDAO empresaDAO = new EmpresaDAO();
     	empresaDAO.salvar(novaEmpresa);
         

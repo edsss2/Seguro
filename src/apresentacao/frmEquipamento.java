@@ -4,6 +4,9 @@
  */
 package apresentacao;
 
+import classes_conexao.EquipamentoDAO;
+import seguro.Equipamento;
+
 /**
  *
  * @author Edsons
@@ -162,8 +165,16 @@ public class frmEquipamento extends javax.swing.JFrame {
 
     private void salvarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        String[] dadosEquipamento = {marcaTxt.getText(), modeloTxt.getText(),numeroSerieTxt.getText(),quantiaTxt.getText(),
-        tempoUsoTxt.getText(), danosTxt.getText()};
+    	Equipamento novoEquipamento = new Equipamento(marcaTxt.getText(), modeloTxt.getText(),numeroSerieTxt.getText(),quantiaTxt.getText(),
+        tempoUsoTxt.getText(), danosTxt.getText());
+    	EquipamentoDAO equipamentoDAO = new EquipamentoDAO();
+    	equipamentoDAO.salvar(novoEquipamento);
+    	
+    	this.dispose();
+    	
+    	
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void AddEquipamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddEquipamentoActionPerformed
