@@ -31,6 +31,34 @@ public abstract class GenericDAO<T> {
         executeUpdate(sql, entity);
     }
     
+ // Buscar um objeto pelo identificador único
+    public T buscarPorOS(String codigo_os) {
+        String sql = getSelectQuery();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        T entity = null;
+
+        try {
+            conn = DatabaseConnection.getConnection();
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, codigo_os);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                entity = getEntityFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnection.closeResultSet(rs);
+            DatabaseConnection.closeStatement(stmt);
+            DatabaseConnection.closeConnection(conn);
+        }
+        return entity;
+    }
+
+    
  // Método genérico para executar inserts/updates
     private void executeUpdate(String sql, T entity) {
         Connection conn = null;

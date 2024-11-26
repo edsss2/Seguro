@@ -6,6 +6,22 @@ package apresentacao;
 
 import classes_conexao.EquipamentoDAO;
 import seguro.Equipamento;
+import seguro.Empresa;
+
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
+
+import javax.swing.JButton;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  *
@@ -41,8 +57,9 @@ public class frmEquipamento extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        salvarButton = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
         AddEquipamento = new javax.swing.JButton();
+        btnProsseguir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dados do Equipamento");
@@ -66,8 +83,8 @@ public class frmEquipamento extends javax.swing.JFrame {
 
         jLabel9.setText("Danos:");
 
-        salvarButton.setText("Salvar e Prosseguir");
-        salvarButton.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 salvarButtonActionPerformed(evt);
             }
@@ -79,81 +96,90 @@ public class frmEquipamento extends javax.swing.JFrame {
                 AddEquipamentoActionPerformed(evt);
             }
         });
+        
+        btnProsseguir.setText("Prosseguir");
+        btnProsseguir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProsseguirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(marcaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel9)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(danosTxt))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel8)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(tempoUsoTxt))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel7)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(quantiaTxt))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addGap(18, 18, 18)
-                            .addComponent(numeroSerieTxt))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(modeloTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(148, Short.MAX_VALUE)
-                .addComponent(salvarButton)
-                .addGap(87, 87, 87)
-                .addComponent(AddEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102))
+        	layout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGap(33)
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(jLabel2)
+        					.addGap(18)
+        					.addComponent(marcaTxt, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE))
+        				.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        					.addGroup(layout.createSequentialGroup()
+        						.addComponent(jLabel9)
+        						.addPreferredGap(ComponentPlacement.RELATED)
+        						.addComponent(danosTxt))
+        					.addGroup(layout.createSequentialGroup()
+        						.addComponent(jLabel8)
+        						.addPreferredGap(ComponentPlacement.RELATED)
+        						.addComponent(tempoUsoTxt))
+        					.addGroup(layout.createSequentialGroup()
+        						.addComponent(jLabel7)
+        						.addPreferredGap(ComponentPlacement.UNRELATED)
+        						.addComponent(quantiaTxt))
+        					.addGroup(layout.createSequentialGroup()
+        						.addComponent(jLabel5)
+        						.addGap(18)
+        						.addComponent(numeroSerieTxt))
+        					.addGroup(layout.createSequentialGroup()
+        						.addComponent(jLabel3)
+        						.addPreferredGap(ComponentPlacement.UNRELATED)
+        						.addComponent(modeloTxt, GroupLayout.PREFERRED_SIZE, 238, GroupLayout.PREFERRED_SIZE))))
+        			.addContainerGap(250, Short.MAX_VALUE))
+        		.addGroup(layout.createSequentialGroup()
+        			.addContainerGap(186, Short.MAX_VALUE)
+        			.addComponent(btnSalvar)
+        			.addGap(18)
+        			.addComponent(btnProsseguir)
+        			.addGap(18)
+        			.addComponent(AddEquipamento, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
+        			.addGap(94))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(69, 69, 69)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(marcaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(modeloTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(numeroSerieTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(quantiaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(tempoUsoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(danosTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(salvarButton)
-                        .addComponent(AddEquipamento))
-                    .addGap(28, 28, 28)
-                )
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGap(69)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(jLabel2)
+        				.addComponent(marcaTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addGap(18)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(jLabel3)
+        				.addComponent(modeloTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addGap(10)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(jLabel5)
+        				.addComponent(numeroSerieTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addGap(12)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(jLabel7)
+        				.addComponent(quantiaTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addGap(16)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(jLabel8)
+        				.addComponent(tempoUsoTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addGap(18)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(jLabel9)
+        				.addComponent(danosTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addPreferredGap(ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(AddEquipamento)
+        				.addComponent(btnProsseguir)
+        				.addComponent(btnSalvar))
+        			.addGap(28))
         );
+        getContentPane().setLayout(layout);
         
         pack();
         setLocationRelativeTo(null);
@@ -162,15 +188,23 @@ public class frmEquipamento extends javax.swing.JFrame {
     private void marcaTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marcaTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_marcaTxtActionPerformed
+    
+    private void btnProsseguirActionPerformed(java.awt.event.ActionEvent evt) {
+    	
+    	gerarPDF();
+    	this.dispose();
+    }
 
     private void salvarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    	
+    	int codigoEquipamento = frmPrincipal.mostrarCodigoOS(frmPrincipal.codigoOS);
+    	
+    	
         
     	Equipamento novoEquipamento = new Equipamento(marcaTxt.getText(), modeloTxt.getText(),numeroSerieTxt.getText(),quantiaTxt.getText(),
-        tempoUsoTxt.getText(), danosTxt.getText());
+        tempoUsoTxt.getText(), danosTxt.getText(), codigoEquipamento);
     	EquipamentoDAO equipamentoDAO = new EquipamentoDAO();
     	equipamentoDAO.salvar(novoEquipamento);
-    	
-    	this.dispose();
     	
     	
         
@@ -219,11 +253,36 @@ public class frmEquipamento extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void gerarPDF() {
+    	Document document = new Document();
+    	//gerar o documento pdf
+    	try {
+			PdfWriter.getInstance(document, new FileOutputStream("laudo.pdf"));
+			document.open();
+			document.add(new Paragraph("Laudo Técnico de Equipamento Queimado"));
+			
+			
+			
+		} catch (Exception e) {
+			System.out.print(e);
+		} finally {
+			document.close();
+		}
+    	//abrir o documento pdf 
+    	try {
+			Desktop.getDesktop().open(new File("laudo.pdf"));
+    		
+		} catch (Exception e2) {
+			System.out.println(e2);
+		}
+    	
+    	
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddEquipamento;
     private javax.swing.JTextField danosTxt;
-    private javax.swing.JButton salvarButton;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -235,5 +294,6 @@ public class frmEquipamento extends javax.swing.JFrame {
     private javax.swing.JTextField numeroSerieTxt;
     private javax.swing.JTextField quantiaTxt;
     private javax.swing.JTextField tempoUsoTxt;
-    // End of variables declaration//GEN-END:variables
+    private JButton btnSalvar;
+    private javax.swing.JButton btnProsseguir;
 }

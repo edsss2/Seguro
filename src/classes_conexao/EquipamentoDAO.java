@@ -10,7 +10,7 @@ public class EquipamentoDAO extends GenericDAO<Equipamento> {
 
 	@Override
 	protected String getInsertQuery() {
-		return "INSERT INTO equipamento (marca, modelo, numero_serie, quantia, tempo_uso, danos) VALUES (?, ?, ?, ?, ?, ?)";
+		return "INSERT INTO equipamento (marca, modelo, numero_serie, quantia, tempo_uso, danos, codigo_os) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	}
 
 	@Override
@@ -39,6 +39,7 @@ public class EquipamentoDAO extends GenericDAO<Equipamento> {
         stmt.setString(4, equipamento.getQuantia());
         stmt.setString(5, equipamento.getTempoUso());
         stmt.setString(6, equipamento.getDanos());
+        stmt.setInt(7, equipamento.getCodigoOS());
 		
 	}
 
@@ -50,7 +51,8 @@ public class EquipamentoDAO extends GenericDAO<Equipamento> {
 				rs.getString("numeroSerie"),
 				rs.getString("quantia"),
 				rs.getString("tempoUso"),
-				rs.getString("danos")
+				rs.getString("danos"),
+				rs.getInt("codigoOS")
 		);
 	
 	}

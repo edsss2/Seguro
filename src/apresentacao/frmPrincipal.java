@@ -162,6 +162,7 @@ public class frmPrincipal extends javax.swing.JDialog implements TratamentoDados
                 dataAcidenteTxtActionPerformed(evt);
             }
         });
+        dataAcidenteTxt.setText("00/00/0000");
 
         jLabel13.setText("Hora Provavel do acidente:");
 
@@ -202,7 +203,7 @@ public class frmPrincipal extends javax.swing.JDialog implements TratamentoDados
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        cnpjTxt.setText("");
+        cnpjTxt.setText("00.000.000/0000-00");
 
         jLabel15.setText("4. Contato da Empresa");
 
@@ -430,11 +431,13 @@ public class frmPrincipal extends javax.swing.JDialog implements TratamentoDados
     	long cnpjNumerico = converterParaLong(cnpjTxt.getText());
     	int cepNumerico = converterParaInt(cepTxt.getText());
     	String dataSQL = formatarDataParaSQL(dataAcidenteTxt.getText());
+    	codigoOS = Empresa.gerarNumeroAleatorio();
+    	
     	
         
 
     	Empresa novaEmpresa = new Empresa(nomeTxt.getText(),cnpjNumerico,tecnicoTxt.getText(),empresaTxt.getText(),enderecoTxt.getText(), bairroTxt.getText(),cidadeTxt.getText(), 
-    				cepNumerico,dataSQL,horaAcidenteTxt.getText(),txtDescricao.getText(), telefoneTxt.getText(), emailTxt.getText());
+    				cepNumerico,dataSQL,horaAcidenteTxt.getText(),txtDescricao.getText(), telefoneTxt.getText(), emailTxt.getText(), codigoOS);
     	EmpresaDAO empresaDAO = new EmpresaDAO();
     	empresaDAO.salvar(novaEmpresa);
         
@@ -448,6 +451,11 @@ public class frmPrincipal extends javax.swing.JDialog implements TratamentoDados
     /**
      * @param args the command line arguments
      */
+    
+    public static int mostrarCodigoOS(int codigoOS) {
+    	return codigoOS;
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -520,5 +528,6 @@ public class frmPrincipal extends javax.swing.JDialog implements TratamentoDados
     private javax.swing.JTextField tecnicoTxt;
     private javax.swing.JFormattedTextField telefoneTxt;
     private javax.swing.JTextArea txtDescricao;
+    public static int codigoOS;
     // End of variables declaration//GEN-END:variables
 }

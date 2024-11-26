@@ -7,6 +7,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/mssql-jdbc-12.8.1.jre11.jar"/>
+	<classpathentry kind="lib" path="lib/itextpdf-5.5.13.3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Mysql">
 		<attributes>
 			<attribute name="module" value="true"/>

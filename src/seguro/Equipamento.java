@@ -8,14 +8,16 @@ public class Equipamento {
 	private String quantia;
 	private String tempoUso;
 	private String danos;
+	private int codigoOS;
 	
-	public Equipamento(String marca, String modelo, String numeroSerie, String quantia, String tempoUso, String danos) {
+	public Equipamento(String marca, String modelo, String numeroSerie, String quantia, String tempoUso, String danos, int codigoOS) {
 		this.marca = marca;
 		this.modelo = modelo;
 		this.numeroSerie = numeroSerie;
 		this.quantia = quantia;
 		this.tempoUso = tempoUso;
 		this.danos = danos;
+		this.codigoOS = codigoOS;
 	}
 	
 	public String getMarca() {
@@ -56,6 +58,15 @@ public class Equipamento {
 	public void setDanos(String danos) {
 		this.danos = danos;
 	}
+
+	public int getCodigoOS() {
+		return codigoOS;
+	}
+
+	public void setCodigoOS(int codigoOS) {
+		this.codigoOS = codigoOS;
+	}
+	
 	
 	
 }

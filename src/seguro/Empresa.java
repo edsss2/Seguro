@@ -3,6 +3,7 @@ package seguro;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 public class Empresa {
 	
@@ -28,11 +29,12 @@ public class Empresa {
     
     private String telefone;
     private String email;
+    private int codigoOS;
 
     
 	public Empresa(String nome, long cnpj, String responsavelTecnico, String empresaResponsavelTecnico,
 			String endereco, String bairro, String cidade, int cep, String dataAcidente, String horaAcidente,
-			String descricao, String telefone, String email) {
+			String descricao, String telefone, String email, int codigoOS) {
 		this.nome = nome;
 		this.cnpj = cnpj;
 		this.responsavelTecnico = responsavelTecnico;
@@ -46,6 +48,13 @@ public class Empresa {
 		this.descricao = descricao;
 		this.telefone = telefone;
 		this.email = email;
+		this.codigoOS = codigoOS;
+	}
+	
+	public static int gerarNumeroAleatorio() {
+		Random random = new Random();
+		return 100000 + random.nextInt(900000);
+		
 	}
 
 	 
@@ -126,6 +135,14 @@ public class Empresa {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public int getCodigoOS() {
+		return codigoOS;
+	}
+
+	public void setCodigoOS(int codigoOS) {
+		this.codigoOS = codigoOS;
 	}
     
 
