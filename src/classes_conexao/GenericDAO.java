@@ -32,7 +32,7 @@ public abstract class GenericDAO<T> {
     }
     
  // Buscar um objeto pelo identificador único
-    public T buscarPorOS(String codigo_os) {
+    public T buscarPorOS(int codigo_os) {
         String sql = getSelectQuery();
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -42,7 +42,7 @@ public abstract class GenericDAO<T> {
         try {
             conn = DatabaseConnection.getConnection();
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, codigo_os);
+            stmt.setInt(1, codigo_os);
             rs = stmt.executeQuery();
 
             if (rs.next()) {

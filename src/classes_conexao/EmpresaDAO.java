@@ -27,35 +27,12 @@ public class EmpresaDAO extends GenericDAO<Empresa> {
 
 	@Override
 	protected String getSelectQuery() {
-		return "SELECT * FROM empresa WHERE codigo_os = ?";
+		return null;
 	}
-	
+
 	@Override
-	public Empresa buscarPorOS(String codigo_os) {
-        String sql = getSelectQuery();
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        Empresa empresa = null;
-
-        try {
-            conn = DatabaseConnection.getConnection();
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, codigo_os);
-            rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                empresa = getEntityFromResultSet(rs);
-                //System.out.println("Aluno encontrado: " + empresa.getNome() + ", " + aluno.getEmail() + ", " + aluno.getIdade());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DatabaseConnection.closeResultSet(rs);
-            DatabaseConnection.closeStatement(stmt);
-            DatabaseConnection.closeConnection(conn);
-        }
-        return empresa;
+	public Empresa buscarPorOS(int codigo_os) {
+        return null;
 	}
 
 
