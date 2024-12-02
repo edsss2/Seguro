@@ -17,6 +17,9 @@ import javax.swing.JButton;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+
+import Template.LaudoTecnicoTemplate;
+
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -255,27 +258,11 @@ public class frmEquipamento extends javax.swing.JFrame {
     }
     
     private void gerarPDF() {
-    	Document document = new Document();
     	//gerar o documento pdf
-    	try {
-			PdfWriter.getInstance(document, new FileOutputStream("laudo.pdf"));
-			document.open();
-			document.add(new Paragraph("Laudo Técnico de Equipamento Queimado"));
-			
-			
-			
-		} catch (Exception e) {
-			System.out.print(e);
-		} finally {
-			document.close();
-		}
-    	//abrir o documento pdf 
-    	try {
-			Desktop.getDesktop().open(new File("laudo.pdf"));
-    		
-		} catch (Exception e2) {
-			System.out.println(e2);
-		}
+    	LaudoTecnicoTemplate laudo = new LaudoTecnicoTemplate();
+    	
+    	
+    	
     	
     	
     }

@@ -24,7 +24,7 @@ public class Seguro {
        int codigoLaudo = frmPrincipal.mostrarCodigoOS(frmPrincipal.codigoOS);
        
        LaudoDAO laudoDAO = new LaudoDAO();
-       Laudo laudo = laudoDAO.buscarPorOS(690762);
+       Laudo laudo = laudoDAO.buscarPorOS(codigoLaudo);
        if (laudo == null) {
     	   System.out.println("Laudo não encontrado");
        }else {
