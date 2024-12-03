@@ -6,6 +6,7 @@ package apresentacao;
 
 import classes_conexao.EquipamentoDAO;
 import seguro.Equipamento;
+import seguro.Laudo;
 import seguro.Empresa;
 
 import java.awt.Desktop;
@@ -194,7 +195,8 @@ public class frmEquipamento extends javax.swing.JFrame {
     
     private void btnProsseguirActionPerformed(java.awt.event.ActionEvent evt) {
     	
-    	gerarPDF();
+    	Laudo laudo = new Laudo();
+    	laudo.gerarLaudo();
     	this.dispose();
     }
 
@@ -257,15 +259,7 @@ public class frmEquipamento extends javax.swing.JFrame {
         });
     }
     
-    private void gerarPDF() {
-    	//gerar o documento pdf
-    	LaudoTecnicoTemplate laudo = new LaudoTecnicoTemplate();
-    	
-    	
-    	
-    	
-    	
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddEquipamento;

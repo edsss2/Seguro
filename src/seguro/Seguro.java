@@ -5,7 +5,6 @@
 package seguro;
 
 import apresentacao.frmPrincipal;
-import classes_conexao.LaudoDAO;
 
 
 /**
@@ -18,19 +17,12 @@ public class Seguro {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       //frmPrincipal frmP = new frmPrincipal(null, true);
-       //frmP.setVisible(true);
+       frmPrincipal frmP = new frmPrincipal(null, true);
+       frmP.setVisible(true);
        
        int codigoLaudo = frmPrincipal.mostrarCodigoOS(frmPrincipal.codigoOS);
-       
-       LaudoDAO laudoDAO = new LaudoDAO();
-       Laudo laudo = laudoDAO.buscarPorOS(codigoLaudo);
-       if (laudo == null) {
-    	   System.out.println("Laudo não encontrado");
-       }else {
-    	   System.out.println("Laudo encontrado");
-       }
-       
+       System.out.println(codigoLaudo);
+ 
 
        
        

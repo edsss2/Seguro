@@ -1,12 +1,16 @@
 package classes_conexao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import seguro.Equipamento;
 
 public class EquipamentoDAO extends GenericDAO<Equipamento> {
+	
+	private ArrayList<Equipamento> equipamentos = new ArrayList<>();
 
 	@Override
 	protected String getInsertQuery() {
@@ -27,8 +31,33 @@ public class EquipamentoDAO extends GenericDAO<Equipamento> {
 
 	@Override
 	protected String getSelectQuery() {
-		// TODO Auto-generated method stub
-		return null;
+		return "SELECT marca, modelo, numero_serie, quantia, tempo_uso, danos, codigo_os FROM equipamento WHERE codigo_os = ?";
+	}
+	
+	public ArrayList<Equipamento> buscarEquipamentosPorOS(int codigo_os) {
+		String sql = getSelectQuery();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DatabaseConnection.getConnection();
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, codigo_os);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) { // Itera sobre o ResultSet
+                Equipamento equipamento = getEntityFromResultSet(rs); // Cria o objeto Equipamento
+                equipamentos.add(equipamento); // Adiciona o objeto à lista
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnection.closeResultSet(rs);
+            DatabaseConnection.closeStatement(stmt);
+            DatabaseConnection.closeConnection(conn);
+        }
+        return equipamentos;
 	}
 
 	@Override
@@ -48,11 +77,11 @@ public class EquipamentoDAO extends GenericDAO<Equipamento> {
 		return new Equipamento(
 				rs.getString("marca"),
 				rs.getString("modelo"),
-				rs.getString("numeroSerie"),
+				rs.getString("numero_serie"),
 				rs.getString("quantia"),
-				rs.getString("tempoUso"),
+				rs.getString("tempo_uso"),
 				rs.getString("danos"),
-				rs.getInt("codigoOS")
+				rs.getInt("codigo_os")
 		);
 	
 	}

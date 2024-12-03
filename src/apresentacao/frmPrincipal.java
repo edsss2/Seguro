@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 import seguro.Empresa;
+import seguro.Laudo;
 import seguro.TratamentoDados;
 import classes_conexao.EmpresaDAO;
 import classes_conexao.GenericDAO;
@@ -431,13 +432,13 @@ public class frmPrincipal extends javax.swing.JDialog implements TratamentoDados
     	long cnpjNumerico = converterParaLong(cnpjTxt.getText());
     	int cepNumerico = converterParaInt(cepTxt.getText());
     	String dataSQL = formatarDataParaSQL(dataAcidenteTxt.getText());
-    	codigoOS = Empresa.gerarNumeroAleatorio();
+    	codigoOS = Laudo.gerarNumeroAleatorio();
     	
     	
         
 
     	Empresa novaEmpresa = new Empresa(nomeTxt.getText(),cnpjNumerico,tecnicoTxt.getText(),empresaTxt.getText(),enderecoTxt.getText(), bairroTxt.getText(),cidadeTxt.getText(), 
-    				cepNumerico,dataSQL,horaAcidenteTxt.getText(),txtDescricao.getText(), telefoneTxt.getText(), emailTxt.getText(), codigoOS);
+    				cepNumerico,dataSQL,horaAcidenteTxt.getText(),txtDescricao.getText(),emailTxt.getText(), telefoneTxt.getText(), codigoOS);
     	EmpresaDAO empresaDAO = new EmpresaDAO();
     	empresaDAO.salvar(novaEmpresa);
         
