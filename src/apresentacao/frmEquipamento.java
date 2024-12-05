@@ -4,28 +4,27 @@
  */
 package apresentacao;
 
+import java.awt.Image;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+
+import javax.imageio.ImageIO;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import classes_conexao.EquipamentoDAO;
 import seguro.Equipamento;
 import seguro.Laudo;
-import seguro.Empresa;
-
-import java.awt.Desktop;
-import java.io.File;
-import java.io.FileOutputStream;
-
-import javax.swing.JButton;
-
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
-
-import Template.LaudoTecnicoTemplate;
-
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  *
@@ -36,7 +35,9 @@ public class frmEquipamento extends javax.swing.JFrame {
     /**
      * Creates new form frmEquipamento
      */
+	
     public frmEquipamento() {
+    	setType(Type.UTILITY);
         initComponents();
     }
 
@@ -107,81 +108,105 @@ public class frmEquipamento extends javax.swing.JFrame {
                 btnProsseguirActionPerformed(evt);
             }
         });
+        
+        JButton btnCarrregarImagem = new JButton("Carregar Imagem");
+        btnCarrregarImagem.setForeground(SystemColor.textHighlight);
+        btnCarrregarImagem.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		carregarFoto();
+        	}
+        });
+        
+        lblFoto = new JLabel("");
+        lblFoto.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+        lblFoto.setIcon(new ImageIcon(frmEquipamento.class.getResource("/img/9004666_image_photo_picture_gallery_file_icon.png")));
+        lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         layout.setHorizontalGroup(
-        	layout.createParallelGroup(Alignment.TRAILING)
+        	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
-        			.addGap(33)
-        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        			.addGap(38)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
         				.addGroup(layout.createSequentialGroup()
-        					.addComponent(jLabel2)
-        					.addGap(18)
-        					.addComponent(marcaTxt, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE))
-        				.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-        					.addGroup(layout.createSequentialGroup()
-        						.addComponent(jLabel9)
-        						.addPreferredGap(ComponentPlacement.RELATED)
-        						.addComponent(danosTxt))
-        					.addGroup(layout.createSequentialGroup()
-        						.addComponent(jLabel8)
-        						.addPreferredGap(ComponentPlacement.RELATED)
-        						.addComponent(tempoUsoTxt))
-        					.addGroup(layout.createSequentialGroup()
-        						.addComponent(jLabel7)
-        						.addPreferredGap(ComponentPlacement.UNRELATED)
-        						.addComponent(quantiaTxt))
-        					.addGroup(layout.createSequentialGroup()
-        						.addComponent(jLabel5)
-        						.addGap(18)
-        						.addComponent(numeroSerieTxt))
-        					.addGroup(layout.createSequentialGroup()
-        						.addComponent(jLabel3)
-        						.addPreferredGap(ComponentPlacement.UNRELATED)
-        						.addComponent(modeloTxt, GroupLayout.PREFERRED_SIZE, 238, GroupLayout.PREFERRED_SIZE))))
-        			.addContainerGap(250, Short.MAX_VALUE))
-        		.addGroup(layout.createSequentialGroup()
-        			.addContainerGap(186, Short.MAX_VALUE)
-        			.addComponent(btnSalvar)
-        			.addGap(18)
-        			.addComponent(btnProsseguir)
-        			.addGap(18)
-        			.addComponent(AddEquipamento, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
-        			.addGap(94))
+        					.addComponent(btnCarrregarImagem)
+        					.addGap(30)
+        					.addComponent(btnSalvar)
+        					.addGap(37)
+        					.addComponent(btnProsseguir)
+        					.addGap(37)
+        					.addComponent(AddEquipamento, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
+        					.addGap(502))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        						.addGroup(layout.createSequentialGroup()
+        							.addComponent(jLabel5)
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addComponent(numeroSerieTxt, GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE))
+        						.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        							.addGroup(layout.createSequentialGroup()
+        								.addComponent(jLabel8)
+        								.addGap(18)
+        								.addComponent(tempoUsoTxt, GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE))
+        							.addGroup(layout.createSequentialGroup()
+        								.addComponent(jLabel3)
+        								.addPreferredGap(ComponentPlacement.RELATED)
+        								.addComponent(modeloTxt, GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE))
+        							.addGroup(layout.createSequentialGroup()
+        								.addComponent(jLabel7)
+        								.addPreferredGap(ComponentPlacement.UNRELATED)
+        								.addComponent(quantiaTxt, 259, 259, 259))
+        							.addGroup(layout.createSequentialGroup()
+        								.addComponent(jLabel2)
+        								.addPreferredGap(ComponentPlacement.UNRELATED)
+        								.addComponent(marcaTxt, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE))
+        							.addGroup(layout.createSequentialGroup()
+        								.addComponent(jLabel9)
+        								.addPreferredGap(ComponentPlacement.UNRELATED)
+        								.addComponent(danosTxt, GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))))
+        					.addGap(89)
+        					.addComponent(lblFoto, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE)
+        					.addGap(325))))
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
-        			.addGap(69)
+        			.addGap(37)
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(jLabel2)
+        						.addComponent(marcaTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        					.addPreferredGap(ComponentPlacement.UNRELATED)
+        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(jLabel3)
+        						.addComponent(modeloTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        					.addGap(18)
+        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(jLabel5)
+        						.addComponent(numeroSerieTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        					.addGap(18)
+        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(jLabel7)
+        						.addComponent(quantiaTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        					.addGap(18)
+        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(jLabel8)
+        						.addComponent(tempoUsoTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        					.addGap(18)
+        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(jLabel9)
+        						.addComponent(danosTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        					.addGap(92))
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(lblFoto, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE)
+        					.addGap(34)))
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(jLabel2)
-        				.addComponent(marcaTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addGap(18)
-        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(jLabel3)
-        				.addComponent(modeloTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addGap(10)
-        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(jLabel5)
-        				.addComponent(numeroSerieTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addGap(12)
-        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(jLabel7)
-        				.addComponent(quantiaTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addGap(16)
-        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(jLabel8)
-        				.addComponent(tempoUsoTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addGap(18)
-        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(jLabel9)
-        				.addComponent(danosTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addPreferredGap(ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(AddEquipamento)
+        				.addComponent(btnCarrregarImagem)
+        				.addComponent(btnSalvar)
         				.addComponent(btnProsseguir)
-        				.addComponent(btnSalvar))
-        			.addGap(28))
+        				.addComponent(AddEquipamento))
+        			.addGap(157))
         );
         getContentPane().setLayout(layout);
         
@@ -207,7 +232,7 @@ public class frmEquipamento extends javax.swing.JFrame {
     	
         
     	Equipamento novoEquipamento = new Equipamento(marcaTxt.getText(), modeloTxt.getText(),numeroSerieTxt.getText(),quantiaTxt.getText(),
-        tempoUsoTxt.getText(), danosTxt.getText(), codigoEquipamento);
+        tempoUsoTxt.getText(), danosTxt.getText(), fis, tamanho, codigoEquipamento);
     	EquipamentoDAO equipamentoDAO = new EquipamentoDAO();
     	equipamentoDAO.salvar(novoEquipamento);
     	
@@ -257,8 +282,33 @@ public class frmEquipamento extends javax.swing.JFrame {
                 new frmEquipamento().setVisible(true);
             }
         });
+        
     }
     
+    private void carregarFoto() {
+    	JFileChooser jfc = new JFileChooser();
+    	jfc.setDialogTitle("Selecionar imagem");
+    	jfc.setFileFilter(new FileNameExtensionFilter("Arquivo de imagem(*.PNG,*.JPG,*.JPEG)", "png", "jpg", "jpeg"));
+    	int resultado = jfc.showOpenDialog(this);
+    	if (resultado == JFileChooser.APPROVE_OPTION) {
+    		try {
+    			fis = new FileInputStream(jfc.getSelectedFile());
+    			tamanho = (int) jfc.getSelectedFile().length();
+    			Image foto = ImageIO.read(jfc.getSelectedFile()).getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH);
+    			lblFoto.setIcon(new ImageIcon(foto));
+    			lblFoto.updateUI();
+    		} catch (Exception e) {
+    			System.out.println(e);
+    		}
+    	}
+    	
+    }
+    
+  //instanciar um objeto para fluxo de bytes
+  	private FileInputStream fis;
+  	
+  	//variável global para armazenar o tamanho da imagem(bytes)
+  	private int tamanho;
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -277,4 +327,5 @@ public class frmEquipamento extends javax.swing.JFrame {
     private javax.swing.JTextField tempoUsoTxt;
     private JButton btnSalvar;
     private javax.swing.JButton btnProsseguir;
+    private JLabel lblFoto;
 }

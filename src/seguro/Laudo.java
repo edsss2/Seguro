@@ -12,7 +12,10 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -29,6 +32,7 @@ public class Laudo {
 		 Empresa empresa = empresaDAO.buscarPorOS(codigoLaudo);
 		 EquipamentoDAO equipamentoDAO = new EquipamentoDAO();
 		 ArrayList<Equipamento> equipamentos = equipamentoDAO.buscarEquipamentosPorOS(codigoLaudo); 
+		 
 		 
 	        try {
 	            String dest = "laudo.pdf"; // Nome do arquivo de saída
@@ -82,7 +86,7 @@ public class Laudo {
 	            document.add(new Paragraph("Equipamentos danificados:", sectionFont));
 
 	            // Criar a tabela
-	            float[] columnWidths = {2, 3, 2, 1, 1, 3}; // Definindo a largura das colunas
+	            float[] columnWidths = {2, 3, 2, 1, 1, 3, 3}; // Definindo a largura das colunas
 	            PdfPTable table = new PdfPTable(columnWidths);
 	            table.setWidthPercentage(100);
 	            table.setSpacingBefore(10f);
@@ -94,6 +98,7 @@ public class Laudo {
 	            table.addCell("Quantidade");
 	            table.addCell("Tempo de Uso");
 	            table.addCell("Danos");
+	            table.addCell("Imagem");
 
 	            // Adicionando dados de exemplo para os equipamentos (substitua pelos dados reais)
 	            for(Equipamento e : equipamentos) {
@@ -103,6 +108,7 @@ public class Laudo {
 	            	table.addCell(e.getQuantia());
 	            	table.addCell(e.getTempoUso());
 	            	table.addCell(e.getDanos());
+	            	table.addCell(processarImagem(e));
 	            }
 
 	            // Adicionar a tabela ao documento
@@ -125,6 +131,26 @@ public class Laudo {
 	        
 	        
 	    }
+	 
+	 private static PdfPCell processarImagem(Equipamento e) {
+		    byte[] foto = e.getFoto();
+		    if (foto != null) {
+		        try {
+		            Image img = Image.getInstance(foto); // Cria a imagem a partir do byte[]
+		            img.scaleToFit(100, 100); // Redimensiona a imagem
+		            return new PdfPCell(img); // Retorna a célula com a imagem
+		        } catch (Exception imgEx) {
+		            System.out.println("Erro ao carregar a imagem: " + imgEx.getMessage());
+		        }
+		    }
+
+		    // Retorna uma célula padrão se não houver imagem
+		    PdfPCell defaultCell = new PdfPCell(new Phrase("Imagem não disponível"));
+		    defaultCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		    defaultCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		    return defaultCell;
+		}
+
 
 	
 	

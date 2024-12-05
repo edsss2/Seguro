@@ -1,5 +1,6 @@
 package classes_conexao;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +15,7 @@ public class EquipamentoDAO extends GenericDAO<Equipamento> {
 
 	@Override
 	protected String getInsertQuery() {
-		return "INSERT INTO equipamento (marca, modelo, numero_serie, quantia, tempo_uso, danos, codigo_os) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		return "INSERT INTO equipamento (marca, modelo, numero_serie, quantia, tempo_uso, danos, foto, codigo_os) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	}
 
 	@Override
@@ -31,7 +32,7 @@ public class EquipamentoDAO extends GenericDAO<Equipamento> {
 
 	@Override
 	protected String getSelectQuery() {
-		return "SELECT marca, modelo, numero_serie, quantia, tempo_uso, danos, codigo_os FROM equipamento WHERE codigo_os = ?";
+		return "SELECT marca, modelo, numero_serie, quantia, tempo_uso, danos, foto, codigo_os FROM equipamento WHERE codigo_os = ?";
 	}
 	
 	public ArrayList<Equipamento> buscarEquipamentosPorOS(int codigo_os) {
@@ -68,12 +69,21 @@ public class EquipamentoDAO extends GenericDAO<Equipamento> {
         stmt.setString(4, equipamento.getQuantia());
         stmt.setString(5, equipamento.getTempoUso());
         stmt.setString(6, equipamento.getDanos());
-        stmt.setInt(7, equipamento.getCodigoOS());
+        stmt.setBlob(7, equipamento.getFis(), equipamento.getTamanho());
+        stmt.setInt(8, equipamento.getCodigoOS());
 		
 	}
 
 	@Override
 	protected Equipamento getEntityFromResultSet(ResultSet rs) throws SQLException {
+		// Obtém o Blob da coluna "foto"
+	    Blob fotoBlob = rs.getBlob("foto");
+	    byte[] foto = null;
+
+	    // Converte o Blob para byte[]
+	    if (fotoBlob != null) {
+	        foto = fotoBlob.getBytes(1, (int) fotoBlob.length());
+	    }
 		return new Equipamento(
 				rs.getString("marca"),
 				rs.getString("modelo"),
@@ -81,6 +91,7 @@ public class EquipamentoDAO extends GenericDAO<Equipamento> {
 				rs.getString("quantia"),
 				rs.getString("tempo_uso"),
 				rs.getString("danos"),
+				foto,
 				rs.getInt("codigo_os")
 		);
 	

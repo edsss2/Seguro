@@ -1,5 +1,7 @@
 package seguro;
 
+import java.io.FileInputStream;
+
 public class Equipamento {
 
 	private String marca;
@@ -8,18 +10,45 @@ public class Equipamento {
 	private String quantia;
 	private String tempoUso;
 	private String danos;
+	//instanciar um objeto para fluxo de bytes
+  	private FileInputStream fis;
+  	
+  	//variável global para armazenar o tamanho da imagem(bytes)
+  	private int tamanho;
+  	
+  	private byte[] foto;
+    
 	private int codigoOS;
 	
-	public Equipamento(String marca, String modelo, String numeroSerie, String quantia, String tempoUso, String danos, int codigoOS) {
+	public Equipamento(String marca, String modelo, String numeroSerie, String quantia, String tempoUso, String danos, FileInputStream fis, int tamanho, int codigoOS) {
 		this.marca = marca;
 		this.modelo = modelo;
 		this.numeroSerie = numeroSerie;
 		this.quantia = quantia;
 		this.tempoUso = tempoUso;
 		this.danos = danos;
+		this.fis = fis;
+		this.tamanho = tamanho;
 		this.codigoOS = codigoOS;
 	}
 	
+	
+	
+	public Equipamento(String marca, String modelo, String numeroSerie, String quantia, String tempoUso, String danos,
+			byte[] foto, int codigoOS) {
+		super();
+		this.marca = marca;
+		this.modelo = modelo;
+		this.numeroSerie = numeroSerie;
+		this.quantia = quantia;
+		this.tempoUso = tempoUso;
+		this.danos = danos;
+		this.foto = foto;
+		this.codigoOS = codigoOS;
+	}
+
+
+
 	public String getMarca() {
 		return marca;
 	}
@@ -66,6 +95,32 @@ public class Equipamento {
 	public void setCodigoOS(int codigoOS) {
 		this.codigoOS = codigoOS;
 	}
+
+	public FileInputStream getFis() {
+		return fis;
+	}
+
+	public void setFis(FileInputStream fis) {
+		this.fis = fis;
+	}
+
+	public int getTamanho() {
+		return tamanho;
+	}
+
+	public void setTamanho(int tamanho) {
+		this.tamanho = tamanho;
+	}
+
+	public byte[] getFoto() {
+		return foto;
+	}
+
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
+	}
+	
+	
 	
 	
 	
