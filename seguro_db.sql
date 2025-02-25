@@ -1,1 +1,1 @@
-SELECT * FROM seguro_db.equipamento;
+
